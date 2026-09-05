@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Caetano Motores - Sistemas de Gestão</title>
+    <style>
+        /* Fundo branco com degradê verde claro no topo */
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background: linear-gradient(180deg, #e8f5e9 0%, #ffffff 100%); 
+            color: #333; 
+            margin: 0; 
+            padding: 20px;
+            min-height: 100vh;
+        }
+        h1 { color: #1b5e20; margin-top: 40px; }
+        .subtitulo { color: #666; font-size: 1.1em; }
+        
+        /* Container dos Planos */
+        .container { display: flex; justify-content: center; gap: 25px; margin-top: 40px; flex-wrap: wrap; }
+        
+        /* Cartões de Planos */
+        .card { 
+            background: #ffffff; 
+            border: 1px solid #e0e0e0; 
+            border-radius: 12px; 
+            padding: 30px; 
+            width: 290px; 
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .card:hover { transform: translateY(-5px); box-shadow: 0 8px 24px rgba(0,0,0,0.1); }
+        
+        /* Destaque do plano Intermediário */
+        .card.destaque { 
+            border: 2px solid #25D366; 
+            position: relative;
+        }
+        .selo {
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #25D366;
+            color: white;
+            padding: 4px 15px;
+            font-size: 0.8em;
+            font-weight: bold;
+            border-radius: 20px;
+        }
+        
+        .preco { font-size: 2em; color: #1b5e20; font-weight: bold; margin: 15px 0; }
+        .recursos { text-align: left; list-style: none; padding: 0; }
+        .recursos li { margin: 10px 0; color: #555; }
+        .recursos li.indisponivel { color: #ccc; text-decoration: line-through; }
+        
+        /* Botão estilo WhatsApp */
+        .btn-whatsapp { 
+            background-color: #25D366; 
+            color: white; 
+            padding: 12px 25px; 
+            border: none; 
+            border-radius: 25px; 
+            font-weight: bold; 
+            font-size: 1em;
+            cursor: pointer; 
+            display: inline-block; 
+            width: 85%; 
+            margin-top: 20px; 
+            text-decoration: none;
+            box-shadow: 0 4px 10px rgba(37, 211, 102, 0.3);
+            transition: background 0.2s;
+        }
+        .btn-whatsapp:hover { background-color: #128C7E; }
+        .btn-secundario { background-color: #f0f2f5; color: #555; box-shadow: none; }
+        .btn-secundario:hover { background-color: #e4e6eb; }
+
+        /* Rodapé com Dados do Cliente */
+        .footer { margin-top: 60px; padding: 30px; background: #ffffff; border-top: 1px solid #e0e0e0; border-radius: 8px; font-size: 0.95em; color: #444; }
+        .footer h3 { color: #1b5e20; margin-bottom: 5px; }
+    </style>
+</head>
+<body>
+
+    <h1>Sistemas de Gestão Caetano Motores</h1>
+    <p class="subtitulo">Escolha o sistema ideal para organizar sua oficina de motores e bombas d'água</p>
+
+    <div class="container">
+        <!-- Plano Simples -->
+        <div class="card">
+            <h3>Plano Simples</h3>
+            <div class="preco">R$ 49<span style="font-size: 0.5em;">/mês</span></div>
+            <ul class="recursos">
+                <li>✓ Site de Apresentação</li>
+                <li>✓ Seus Contatos na Internet</li>
+                <li class="indisponivel">✕ Cadastro de Clientes</li>
+                <li class="indisponivel">✕ Agenda e Fluxo de Caixa</li>
+            </ul>
+            <a href="https://wa.me" target="_blank" class="btn-whatsapp btn-secundario">Quero este</a>
+        </div>
+
+        <!-- Plano Intermediário -->
+        <div class="card destaque">
+            <div class="selo">MELHOR CUSTO-BENEFÍCIO</div>
+            <h3>Plano Intermediário</h3>
+            <div class="preco" style="font-size: 1.2em;">Sob Consulta</div>.
+                <li>✓ <b>Cadastro de Clientes Completo</b></li>
+                <li>✓ <b>Agendamento de Serviços</b></li>
+                <li>✓ <b>Entrada e Saída de Dinheiro</b></li>
+                <li>✓ Armazenamento/Backup Interno</li>
+                <li class="indisponivel">✕ Emissão de Nota Fiscal</li>
+            </ul>
+            <a href="https://wa.me" target="_blank" class="btn-whatsapp">Contratar Sistema</a>
+        </div>
+
+        <!-- Plano Premium -->
+        <div class="card">
+            <h3>Plano Premium</h3>
+            <div class="preco">R$ 349<span style="font-size: 0.5em;">/mês</span></div>
+            <ul class="recursos">
+                <li>✓ Tudo do Intermediário</li>
+                <li>✓ Emissão de Nota Fiscal (NFe)</li>
+                <li>✓ Backup Automático em Nuvem</li>
+                <li>✓ Suporte 24 Horas</li>
+            </ul>
+            <a href="https://wa.me" target="_blank" class="btn-whatsapp btn-secundario">Quero o Premium</a>
+        </div>
+    </div>
+
+    <!-- Informações da Caetano Motores -->
+    <div class="footer">
+        <h3>Caetano Motores</h3>
+        
+        <p>Proprietário: <b>Cerineu Caetano</b> | Especialistas em Enrolamento de Motores Elétricos e Conserto de Bombas D'água</p>
+        <p>📞 Telefones: 27 99763-4705 / 99787-5213 / 99951-8833</p>
+        <p>✉ E-mail: caetanomotorores@2013gmail.com</p>
+        <p>📍 Endereço: Av. Lourival Nunes, 1336 - Jd. Limoeiro - Serra - ES</p>
+    </div><!-- Botão Flutuante do WhatsApp Suspenso -->
+<a href="https://wa.me" target="_blank" style="
+    position: fixed;
+    width: 60px;
+    height: 60px;
+    bottom: 40px;
+    right: 40px;
+    background-color: #25D366;
+    color: #FFF;
+    border-radius: 50px;
+    text-align: center;
+    font-size: 30px;
+    box-shadow: 2px 2px 10px rgba(0,0,0,0.3);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+">
+    📞
+</a>
+<p>Sistema desenvolvido para <b>Caetano Motores</b> por <b>Mauro Vieira de Resende</b></p>
+
+</body>
+</html>

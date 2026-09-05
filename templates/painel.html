@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel Caetano Motores</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(180deg, #e8f5e9 0%, #ffffff 100%);
+            color: #333;
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        .header { background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); margin-bottom: 20px; text-align: center;}
+        .header h1 { color: #1b5e20; margin: 0 0 10px 0; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+        .modulo { background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); border-top: 4px solid #25D366; }
+        .modulo h2 { color: #1b5e20; margin-top: 0; border-bottom: 1px solid #eee; padding-bottom: 10px;}
+        
+        /* Formulários e Inputs */
+        label { display: block; margin-top: 10px; font-weight: bold; font-size: 0.9em; }
+        input, select { width: 100%; padding: 10px; margin-top: 5px; border: 1px solid #ccc; border-radius: 8px; box-sizing: border-box; }
+        
+        /* Botão estilo WhatsApp */
+        .btn-whats { background-color: #25D366; color: white; padding: 12px; border: none; border-radius: 25px; font-weight: bold; font-size: 1em; cursor: pointer; width: 100%; margin-top: 15px; box-shadow: 0 4px 10px rgba(37, 211, 102, 0.2); transition: 0.2s;}
+        .btn-whats:hover { background-color: #128C7E; }
+        .btn-backup { background-color: #0288d1; box-shadow: 0 4px 10px rgba(2, 136, 209, 0.2); margin-bottom: 20px;}
+        .btn-backup:hover { background-color: #01579b; }
+        
+        /* Tabelas */
+        table { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 0.9em; }
+        th, td { padding: 10px; border-bottom: 1px solid #eee; text-align: left; }
+        th { background-color: #f9f9f9; color: #1b5e20; }
+        
+        .saldo-box { font-size: 1.5em; font-weight: bold; color: #1b5e20; margin-top: 10px; padding: 10px; background: #e8f5e9; border-radius: 8px; text-align: center;}
+        .alert { background: #fff3cd; color: #856404; padding: 10px; border-radius: 8px; margin-bottom: 20px; text-align: center; font-weight: bold;}
+        .nfe-bloqueada { background: #ffebee; color: #c62828; padding: 10px; border-radius: 8px; font-weight: bold; font-size: 0.9em; text-align: center; margin-top: 15px; border: 1px solid #ffcdd2;}
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>⚙️ Caetano Motores - Sistema Intermediário</h1>
+        <p>Proprietário: Cerineu Caetano | Av. Lourival Nunes, 1336 - Jd. Limoeiro - Serra - ES</p>
+        <a href="/backup"><button class="btn-whats btn-backup" style="width: auto; padding: 10px 30px;">💾 Executar Backup Interno</button></a>
+    </div>
+    
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        {% for message in messages %}
+          <div class="alert">{{ message }}</div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+      
+  </div>   <div class="grid">
+        
+        <!-- MÓDULO 1: CADASTRO DE CLIENTES -->
+        <div class="modulo">
+            <h2>👤 Cadastro de Clientes</h2>
+            <form action="/cadastrar_cliente" method="POST">
+                <label>Nome do Cliente:</label>
+                <input type="text" name="nome" placeholder="Ex: João da Silva" required>
+                
+                <label>Telefone:</label>
+                <input type="text" name="telefone" placeholder="Ex: 27 99999-9999" required>
+                
+                <label>Equipamento (Motor / Bomba):</label>
+                <input type="text" name="equipamento" placeholder="Ex: Motor Elétrico Trifásico 2HP">
+                
+                <button type="submit" class="btn-whats">Salvar Cliente</button>
+            </form>
+
+            <table>
+                <thead>
+                    <tr><th>Nome</th><th>Telefone</th><th>Equipamento</th></tr>
+                </thead>
+                <tbody>
+                    {% for cliente in clientes %}
+                    <tr><td>{{ cliente.nome }}</td><td>{{ cliente.telefone }}</td><td>{{ cliente.equipamento }}</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- MÓDULO 2: AGENDAMENTO -->
+        <div class="modulo">
+            <h2>📅 Agendamento de Serviços</h2>
+            <form action="/agendar_servico" method="POST">
+                <label>Selecione o Cliente:</label>
+                <select name="cliente_id" required>
+                    <option value="">-- Escolha um Cliente --</option>
+                    {% for cliente in clientes %}
+                    <option value="{{ cliente.id }}">{{ cliente.nome }}</option>
+                    {% endfor %}
+                </select>
+                
+                <label>Data de Entrega/Conserto:</label>
+                <input type="date" name="data" required>
+                
+                <label>Descrição do Serviço:</label>
+                <input type="text" name="servico" placeholder="Ex: Rebobinamento completo" required>
+                
+                <button type="submit" class="btn-whats">Agendar Serviço</button>
+            </form>
+
+            <table>
+                <thead>
+                    <tr><th>Cliente</th><th>Data</th><th>Serviço</th></tr>
+                </thead>
+                <tbody>
+                    {% for agendamento in agendamentos %}
+                    <tr><td>{{ agendamento.nome_cliente }}</td><td>{{ agendamento.data }}</td><td>{{ agendamento.servico }}</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- MÓDULO 3: ENTRADA/SAÍDA DE CAIXA -->
+        <div class="modulo">
+            <h2>💰 Controle de Caixa</h2>
+            <form action="/lancar_caixa" method="POST">
+                <label>Tipo de Operação:</label>
+                <select name="tipo" required>
+                    <option value="Entrada">🟢 Entrada (Recebimento)</option>
+                    <option value="Saida">🔴 Saída (Pagamento/Despesa)</option>
+                </select>
+                
+                <label>Descrição:</label>
+                <input type="text" name="descricao" placeholder="Ex: Fio de cobre ou Conserto Bomba" required>
+                
+                <label>Valor (R$):</label>
+                <input type="number" step="0.01" name="valor" placeholder="0.00" required>
+                
+                <label>Data:</label>
+                <input type="date" name="data" required>
+                
+                <button type="submit" class="btn-whats">Lançar no Caixa</button>
+            </form>
+
+            <div class="saldo-box">Saldo Atual: R$ {{ "%.2f"|format(saldo) }}</div>
+
+            <table>
+                <thead>
+                    <tr><th>Tipo</th><th>Descrição</th><th>Valor</th></tr>
+                </thead>
+                <tbody>
+                    {% for lancamento in caixa %}
+                    <tr>
+                        <td>{{ '🟢' if lancamento.tipo == 'Entrada' else '🔴' }}</td>
+                        <td>{{ lancamento.descricao }}</td>
+                        <td>R$ {{ "%.2f"|format(lancamento.valor) }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+         
+
+        <!-- MÓDULO 4: NOTA FISCAL -->
+        <div class="modulo" style="border-top-color: #c62828; background-color: #fafafa;">
+            <h2 style="color: #c62828;">📄 Nota Fiscal Eletrônica</h2>
+            <p style="color: #666; font-size: 0.9em;">A emissão de nota fiscal eletrônica direta não está inclusa no Plano Intermediário.</p>
+          <!-- RODAPÉ ATUALIZADO COM SEU NOME COMO DESENVOLVEDOR --> <!-- RODAPÉ ATUALIZADO COM O SEU NOME COMO DESENVOLVEDOR -->
+    <div class="footer">
+        <p>Sistema desenvolvido para <b>Caetano Motores</b> por <b>Mauro Vieira de Resende</b></p>
+        <p>Enrolamento de Motores Elétricos e Conserto de Bombas D'água</p>
+        <p>📞 Contatos: 27 99763-4705 / 99787-5213 / 99951-8833 | ✉ caetanomotorores@2013gmail.com</p>
+    </div>
+
+</body>
+</html>
+    
+                
+                ✕ Emissão de Nota Fiscal Indisponível neste plano
+ 

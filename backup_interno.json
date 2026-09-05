@@ -1,0 +1,27 @@
+{
+    "clientes": [
+        {
+            "id": 1,
+            "nome": "mauro",
+            "telefone": "11941553921",
+            "equipamento": "motor rp 3256"
+        }
+    ],
+    "agendamentos": [],
+    "caixa": [
+        {
+            "id": 1,
+            "tipo": "Entrada",
+            "descricao": "motor rp 3256",
+            "valor": 300.0,
+            "data": "2026-09-04"
+        },
+        {
+            "id": 2,
+            "tipo": "Saida",
+            "descricao": "edp",
+            "valor": 120.0,
+            "data": "2026-09-04"
+        }
+    ]
+}

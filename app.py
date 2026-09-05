@@ -129,6 +129,32 @@ def fazer_backup():
         
     flash("Backup interno salvo com sucesso!")
     return redirect(url_for("painel"))
+    @app.route("/backup")
+def fazer_backup():
+    import io
+    import json
+    from flask import send_file
+    
+    conn = conectar_banco()
+    cursor = conn.cursor()
+    
+    backup_data = {
+        "clientes": [dict(r) for r in cursor.execute("SELECT * FROM clientes").fetchall()],
+        "agendamentos": [dict(r) for r in cursor.execute("SELECT * FROM agendamentos").fetchall()],
+        "caixa": [dict(r) for r in cursor.execute("SELECT * FROM caixa").fetchall()]
+    }
+    conn.close()
+    
+    json_str = json.dumps(backup_data, ensure_ascii=False, indent=4)
+    file_object = io.BytesIO(json_str.encode('utf-8'))
+    
+    return send_file(
+        file_object,
+        mimetype='application/json',
+        as_attachment=True,
+        download_name='backup_caetano_motores.json'
+    )
+
 
 
 class Port:

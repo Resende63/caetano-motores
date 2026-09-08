@@ -1,9 +1,13 @@
-import json
-import sqlite3
-from flask import Flask, flash, redirect, render_template, request, url_for
+from flask import Flask, request, jsonify, render_template
+from werkzeug.security import generate_password_hash
+import re
+import os  # Permite verificar as pastas do sistema
 
-app = Flask(__name__)
-app.secret_key = "caetanos_motores_chave_secreta"
+# Identifica automaticamente se a pasta é 'Modelos' ou 'templates'
+pasta_visual = 'Modelos' if os.path.exists('Modelos') else 'templates'
+
+# Se você já tiver uma linha "app = Flask..." mais abaixo, substitua por esta:
+app = Flask(__name__, template_folder=pasta_visual)
 
 DATABASE = "oficina.db"
 

@@ -6,11 +6,13 @@
     <title>Gestão Caetano Motores</title>
     <style>
         :root {
-            --primary: #2e7d32; /* Verde Motor */
+            --primary: #4caf50; /* Verde Abacate do Cartão */
+            --primary-dark: #388e3c;
             --bg: #121212;
             --card: #1e1e1e;
             --text: #ffffff;
             --text-secondary: #aaaaaa;
+            --accent-red: #d32f2f; /* Vermelho do Raio CM */
         }
 
         body {
@@ -26,10 +28,22 @@
             margin: 0 auto;
         }
 
+        .logo-box {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
         h1 {
             color: var(--primary);
             text-align: center;
             margin-bottom: 5px;
+            font-size: 28px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .raio {
+            color: var(--accent-red);
         }
 
         p.subtitle {
@@ -37,6 +51,7 @@
             color: var(--text-secondary);
             margin-top: 0;
             margin-bottom: 25px;
+            font-style: italic;
         }
 
         .card {
@@ -44,7 +59,7 @@
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0 4px 10px rgba(0,0,0,0.5);
-            border-left: 5px solid var(--primary);
+            border-top: 4px solid var(--primary);
             margin-bottom: 20px;
         }
 
@@ -55,13 +70,13 @@
         label {
             display: block;
             margin-bottom: 5px;
-            color: var(--text-secondary);
+            color: var(--primary);
             font-weight: bold;
         }
 
         input, textarea {
             width: 100%;
-            padding: 10px;
+            padding: 12px;
             border: 1px solid #333;
             background-color: #2a2a2a;
             color: #fff;
@@ -70,26 +85,31 @@
             font-size: 16px;
         }
 
+        input:focus, textarea:focus {
+            border-color: var(--primary);
+            outline: none;
+        }
+
         textarea {
             resize: vertical;
-            height: 80px;
+            height: 90px;
         }
 
         button {
             width: 100%;
-            padding: 12px;
+            padding: 14px;
             border: none;
             border-radius: 4px;
             font-size: 16px;
             font-weight: bold;
             cursor: pointer;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
             transition: 0.2s;
         }
 
         .btn-save {
             background-color: var(--primary);
-            color: white;
+            color: black; /* Texto escuro contrasta melhor no verde abacate */
         }
 
         .btn-whatsapp {
@@ -109,7 +129,7 @@
         .history-title {
             margin-top: 30px;
             color: var(--primary);
-            border-bottom: 1px solid #333;
+            border-bottom: 2px solid var(--primary);
             padding-bottom: 5px;
         }
 
@@ -118,7 +138,7 @@
             padding: 15px;
             border-radius: 6px;
             margin-bottom: 10px;
-            border-left: 3px solid #555;
+            border-left: 4px solid var(--primary);
         }
 
         .os-header {
@@ -139,34 +159,47 @@
             font-weight: bold;
             margin-top: 5px;
             display: block;
+            font-size: 18px;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            color: var(--text-secondary);
+            font-size: 12px;
+            line-height: 1.6;
+            border-top: 1px solid #333;
+            padding-top: 15px;
         }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h1>Caetano Motores</h1>
-    <p class="subtitle">Controle de Serviços Simplificado</p>
+    <div class="logo-box">
+        <h1>CM<span class="raio">⚡</span> Caetano Motores</h1>
+        <p class="subtitle">Enrolamento de Motores Elétricos e Consertos de Bombas D'água</p>
+    </div>
 
     <div class="card">
         <div class="form-group">
             <label for="cliente">Nome do Cliente</label>
-            <input type="text" id="cliente" placeholder="Ex: João Silva">
+            <input type="text" id="cliente" placeholder="Ex: João da Silva">
         </div>
 
         <div class="form-group">
             <label for="whatsapp">WhatsApp do Cliente (com DDD)</label>
-            <input type="text" id="whatsapp" placeholder="Ex: 27999998888">
+            <input type="text" id="whatsapp" placeholder="Ex: 27997634705">
         </div>
 
         <div class="form-group">
             <label for="defeito">O que o cliente disse? (Problema)</label>
-            <textarea id="defeito" placeholder="Ex: Motor é novo porém parou"></textarea>
+            <textarea id="defeito" placeholder="Ex: O motor é novo, porém parou de funcionar sozinho."></textarea>
         </div>
 
         <div class="form-group">
             <label for="servico">O que o Caetano fez? (Solução)</label>
-            <textarea id="servico" placeholder="Ex: Trocado rolamento travado e rebobinado os fios"></textarea>
+            <textarea id="servico" placeholder="Ex: Efetuada a troca do rolamento que estava travado e rebobinado os fios internos."></textarea>
         </div>
 
         <div class="form-group">
@@ -175,15 +208,19 @@
         </div>
 
         <button class="btn-save" onclick="salvarOS()">💾 Salvar no Histórico</button>
-        <button class="btn-whatsapp" onclick="enviarWhatsApp()">💬 Enviar Orçamento via WhatsApp</button>
+        <button class="btn-whatsapp" onclick="enviarWhatsApp()">💬 Enviar Orçamento por WhatsApp</button>
     </div>
 
     <h3 class="history-title">Últimos Serviços Registrados</h3>
     <div id="lista-os"></div>
+
+    <footer>
+        <strong>Cerineu Caetano</strong> - Proprietário<br>
+        Av. Lorival Nunes, 1336 - Jd. Limoeiro - Serra - ES
+    </footer>
 </div>
 
 <script>
-    // Carrega os dados salvos ao abrir a página
     document.addEventListener("DOMContentLoaded", carregarHistorico);
 
     function salvarOS() {
@@ -208,12 +245,12 @@
         };
 
         let historico = JSON.parse(localStorage.getItem("caetano_motores_os")) || [];
-        historico.unshift(novaOS); // Adiciona no início da lista
+        historico.unshift(novaOS);
         localStorage.setItem("caetano_motores_os", JSON.stringify(historico));
 
         carregarHistorico();
         limparCampos();
-        alert("Serviço salvo com sucesso no histórico!");
+        alert("Serviço guardado com sucesso!");
     }
 
     function carregarHistorico() {
@@ -223,7 +260,7 @@
         let historico = JSON.parse(localStorage.getItem("caetano_motores_os")) || [];
 
         if (historico.length === 0) {
-            lista.innerHTML = "<p style='color: #aaa; text-align: center;'>Nenhum serviço registrado ainda.</p>";
+            lista.innerHTML = "<p style='color: #aaa; text-align: center;'>Nenhum motor ou bomba registrado no histórico ainda.</p>";
             return;
         }
 
@@ -245,26 +282,24 @@
 
     function enviarWhatsApp() {
         const cliente = document.getElementById("cliente").value;
-        const whatsapp = document.getElementById("whatsapp").value.replace(/\D/g, ''); // Remove o que não for número
+        const whatsapp = document.getElementById("whatsapp").value.replace(/\D/g, '');
         const defeito = document.getElementById("defeito").value;
         const servico = document.getElementById("servico").value;
         const valor = document.getElementById("valor").value;
 
         if (!cliente || !valor || !whatsapp) {
-            alert("Para enviar o WhatsApp, você precisa preencher o Nome, o Celular do Cliente e o Valor!");
+            alert("Para enviar o WhatsApp, coloque o Nome, o Celular do Cliente e o Valor!");
             return;
         }
 
-        // Monta a mensagem bonita automática
-        let mensagem = `Olá ${cliente}! Aqui é o Caetano Motores. 👍%0A%0A`;
+        let mensagem = `Olá ${cliente}! Aqui é a *Caetano Motores*. 👍%0A%0A`;
         mensagem += `*Problema relatado:* ${defeito}%0A`;
         if(servico) {
             mensagem += `*Serviço executado:* ${servico}%0A`;
         }
         mensagem += `*Valor total:* R$ ${parseFloat(valor).toFixed(2)}%0A%0A`;
-        mensagem += `Seu motor está pronto/orçado! Qualquer dúvida estou à disposição.`;
+        mensagem += `Seu equipamento está pronto! Qualquer dúvida, estamos à disposição.`;
 
-        // Abre o link do WhatsApp com o número e a mensagem
         const url = `https://wa.me{whatsapp}?text=${mensagem}`;
         window.open(url, '_blank');
     }

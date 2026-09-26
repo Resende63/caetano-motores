@@ -24,7 +24,7 @@
         }
 
         .container {
-            max-width: 600px;
+            max-width: 650px;
             margin: 0 auto;
         }
 
@@ -64,9 +64,18 @@
             background-color: var(--card);
             padding: 20px;
             border-radius: 12px;
-            box-shadow: 0 0 15px rgba(102, 255, 102, 0.4); /* Efeito Fluorescente */
+            box-shadow: 0 0 15px rgba(102, 255, 102, 0.3);
             border: 3px solid var(--primary);
             margin-bottom: 20px;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 15px;
+        }
+
+        .form-row .form-group {
+            flex: 1;
         }
 
         .form-group {
@@ -97,12 +106,12 @@
             border-color: var(--primary);
             background-color: #fff;
             outline: none;
-            box-shadow: 0 0 8px rgba(102, 255, 102, 0.6);
+            box-shadow: 0 0 8px rgba(102, 255, 102, 0.5);
         }
 
         textarea {
             resize: vertical;
-            height: 80px;
+            height: 70px;
         }
 
         button {
@@ -140,7 +149,16 @@
             justify-content: center;
             gap: 10px;
             margin-top: 15px;
-            box-shadow: 0 4px 10px rgba(0, 150, 136, 0.3);
+        }
+
+        .btn-retirar {
+            background-color: #ff9800;
+            color: white;
+            padding: 6px 12px;
+            font-size: 13px;
+            width: auto;
+            margin: 5px 0 0 0;
+            border-radius: 4px;
         }
 
         button:hover {
@@ -148,11 +166,14 @@
             transform: scale(0.99);
         }
 
-        .history-title {
+        .section-title {
             margin-top: 30px;
             color: #1b5e20;
             border-bottom: 3px solid var(--primary);
             padding-bottom: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
         .os-item {
@@ -181,15 +202,14 @@
             color: #2e7d32;
             font-weight: bold;
             margin-top: 8px;
-            display: block;
-            font-size: 18px;
+            display: inline-block;
+            font-size: 16px;
             background: #e8f5e9;
-            padding: 5px 10px;
+            padding: 4px 8px;
             border-radius: 4px;
-            width: fit-content;
         }
 
-        .badge-retirada {
+        .badge-info {
             display: inline-block;
             background-color: #eceff1;
             color: #37474f;
@@ -198,9 +218,17 @@
             font-size: 13px;
             font-weight: bold;
             margin-top: 5px;
+            margin-right: 5px;
         }
 
-        /* Seção Secreta do Olho Mágico */
+        .gaveta-box {
+            background-color: #fffde7;
+            border: 2px dashed #ffb300;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 15px;
+        }
+
         .segredo-box {
             display: none;
             background: #ffffff;
@@ -208,30 +236,6 @@
             padding: 15px;
             border-radius: 12px;
             margin-top: 15px;
-            animation: fadeIn 0.5s;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .segredo-box h4 {
-            color: #00796b;
-            margin-top: 0;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .segredo-box ul {
-            margin: 0;
-            padding-left: 20px;
-            color: #004d40;
-        }
-
-        .segredo-box li {
-            margin-bottom: 8px;
         }
 
         footer {
@@ -250,37 +254,41 @@
 <div class="container">
     <div class="logo-box">
         <h1>CM<span class="raio">⚡</span> Caetano Motores</h1>
-        <p class="subtitle">Enrolamento de Motores Elétricos e Consertos de Bombas D'água</p>
+        <p class="subtitle">Cadastro, Agenda e Fluxo de Oficina Oficial</p>
     </div>
 
+    <!-- FICHA DE CADASTRO E AGENDA -->
     <div class="card">
-        <div class="form-group">
-            <label for="cliente">Nome do Cliente</label>
-            <input type="text" id="cliente" placeholder="Ex: João da Silva">
+        <div class="form-row">
+            <div class="form-group">
+                <label for="cliente">Nome do Cliente (Cadastro)</label>
+                <input type="text" id="cliente" placeholder="Ex: João da Silva">
+            </div>
+            <div class="form-group">
+                <label for="whatsapp">Telefone / WhatsApp</label>
+                <input type="text" id="whatsapp" placeholder="Ex: 27997634705">
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label for="equipamento">Qual o Motor / Bomba?</label>
+                <input type="text" id="equipamento" placeholder="Ex: Motor Weg 2CV / Bomba Dancor">
+            </div>
+            <div class="form-group">
+                <label for="data_entrada">Agenda: Dia da Entrada</label>
+                <input type="date" id="data_entrada">
+            </div>
         </div>
 
         <div class="form-group">
-            <label for="whatsapp">WhatsApp do Cliente (com DDD)</label>
-            <input type="text" id="whatsapp" placeholder="Ex: 27997634705">
+            <label for="defeito">O que o cliente relatou? (Defeito)</label>
+            <textarea id="defeito" placeholder="Ex: Parou de funcionar e está fazendo um barulho pesado."></textarea>
         </div>
 
         <div class="form-group">
-            <label for="defeito">O que o cliente disse? (Problema)</label>
-            <textarea id="defeito" placeholder="Ex: O motor parou sozinho e cheira a queimado."></textarea>
-        </div>
-
-        <div class="form-group">
-            <label for="servico">O que o Caetano fez? (Solução)</label>
-            <textarea id="servico" placeholder="Ex: Rolamento trocado e rebobinamento completo executado."></textarea>
-        </div>
-
-        <div class="form-group">
-            <label for="retirada">Botão da Retirada (Como será entregue?)</label>
-            <select id="retirada">
-                <option value="Cliente vem buscar na oficina">🏃‍♂️ Cliente vem buscar na oficina</option>
-                <option value="Caetano vai entregar ao cliente">🚚 Caetano vai entregar ao cliente</option>
-                <option value="Já foi retirado e entregue">✅ Já foi retirado e entregue</option>
-            </select>
+            <label for="servico">O que foi feito? (Mão de Obra Caetano)</label>
+            <textarea id="servico" placeholder="Ex: Troca de rolamentos e rebobinamento completo executado."></textarea>
         </div>
 
         <div class="form-group">
@@ -288,22 +296,27 @@
             <input type="number" id="valor" placeholder="Ex: 350">
         </div>
 
-        <button class="btn-save" onclick="salvarOS()">💾 Salvar no Histórico</button>
+        <button class="btn-save" onclick="salvarOS()">💾 Salvar na Agenda/Oficina</button>
         <button class="btn-whatsapp" onclick="enviarWhatsApp()">💬 Enviar Orçamento por WhatsApp</button>
     </div>
 
-    <h3 class="history-title">Últimos Serviços Registrados</h3>
-    <div id="lista-os"></div>
+    <!-- BALCÃO DA OFICINA -->
+    <h3 class="section-title">🛠️ Motores na Oficina (Em Andamento)</h3>
+    <div id="lista-oficina"></div>
 
-    <!-- O Olho Mágico: O Grande Diferencial Interativo -->
+    <!-- GAVETA DE RETIRADA -->
+    <h3 class="section-title" style="color: #e65100;">💼 Gaveta de Retirados (Lanche da Tarde ☕)</h3>
+    <div id="gaveta-retirados" class="gaveta-box"></div>
+
+    <!-- OLHO MÁGICO -->
     <button class="btn-olho" onclick="revelarSegredo()">👁️✨ Olho Mágico: Dicas do Mestre</button>
     
     <div id="segredo-box" class="segredo-box">
-        <h4>🛠️ Segredos do Caetano para o seu Motor durar mais:</h4>
-        <ul>
-            <li><strong>Queda de Energia:</strong> Se a luz da rua piscar, desligue o motor imediatamente da tomada para não queimar as bobinas novas.</li>
-            <li><strong>Trabalho Seco:</strong> Nunca ligue a bomba d'água sem água circulando dentro dela, ou o selo mecânico vai derreter.</li>
-            <li><strong>Barulho estranho:</strong> Se notar um ronco pesado, traga direto para trocar o rolamento antes que o motor trave de vez!</li>
+        <h4 style="color: #00796b; margin-top:0;">🛠️ Segredos do Caetano para o seu Motor durar mais:</h4>
+        <ul style="color: #004d40; padding-left: 20px;">
+            <li><strong>Queda de Energia:</strong> Se a luz piscar, tire o motor da tomada para não queimar as bobinas novas.</li>
+            <li><strong>Trabalho Seco:</strong> Nunca ligue a bomba sem água dentro, senão o selo mecânico derrete.</li>
+            <li><strong>Ronco pesado:</strong> Se o motor roncar, traga logo para trocar o rolamento antes que trave tudo!</li>
         </ul>
     </div>
 
@@ -315,20 +328,17 @@
 </div>
 
 <script>
-    document.addEventListener("DOMContentLoaded", carregarHistorico);
-
-    function salvarOS() {
-        const cliente = document.getElementById("cliente").value;
-        const whatsapp = document.getElementById("whatsapp").value;
-        const defeito = document.getElementById("defeito").value;
-        const servico = document.getElementById("servico").value;
-const retirada = document.getElementById("retirada").value;const valor = document.getElementById("valor").value;if (!cliente || !defeito || !valor) {alert("Por favor, preencha pelo menos o Nome, o Problema e o Valor!");return;}const novaOS = {cliente,whatsapp,defeito,servico,retirada,valor,data: new Date().toLocaleDateString('pt-BR')};let historico = JSON.parse(localStorage.getItem("caetano_motores_os")) || [];historico.unshift(novaOS);localStorage.setItem("caetano_motores_os", JSON.stringify(historico));carregarHistorico();limparCampos();alert("Serviço guardado no sistema!");}function carregarHistorico() {const lista = document.getElementById("lista-os");lista.innerHTML = "";let historico = JSON.parse(localStorage.getItem("caetano_motores_os")) || [];if (historico.length === 0) {lista.innerHTML = "Nenhum motor ou bomba registrado no histórico ainda.";return;}historico.forEach(os => {const item = document.createElement("div");item.className = "os-item";item.innerHTML = <div class="os-header"> <span>${os.cliente}</span> <span class="os-date">${os.data}</span> </div> <p><strong>Problema:</strong> ${os.defeito}</p> <p><strong>Serviço:</strong> ${os.servico || 'Não informado'}</p> <div class="badge-retirada">📦 Entrega: ${os.retirada || 'A combinar'}</div> <span class="price-tag">Valor: R$ ${parseFloat(os.valor).toFixed(2)}</span>;lista.appendChild(item);});}function enviarWhatsApp() {const cliente = document.getElementById("cliente").value;const whatsapp = document.getElementById("whatsapp").value.replace(/\D/g, '');const defeito = document.getElementById("defeito").value;const servico = document.getElementById("servico").value;const retirada = document.getElementById("retirada").value;const valor = document.getElementById("valor").value;if (!cliente || !valor || !whatsapp) {alert("Para enviar o WhatsApp, coloque o Nome, o Celular do Cliente e o Valor!");return;}let mensagem = Olá ${cliente}! Aqui é a *Caetano Motores*. 👍%0A%0A;mensagem += *Problema:* ${defeito}%0A;if(servico) {mensagem += *Serviço:* ${servico}%0A;}mensagem += *Status de Entrega:* ${retirada}%0A;mensagem += *Valor total:* R$ ${parseFloat(valor).toFixed(2)}%0A%0A;mensagem += Seu equipamento está pronto! Qualquer dúvida, estamos à disposição do amigo.;const url = https://wa.me{whatsapp}?text=${mensagem};window.open(url, '_blank');}function limparCampos() {document.getElementById("cliente").value = "";document.getElementById("whatsapp").value = "";document.getElementById("defeito").value = "";document.getElementById("servico").value = "";document.getElementById("valor").value = "";document.getElementById("retirada").selectedIndex = 0;}// Função do Olho Mágicofunction revelarSegredo() {const box = document.getElementById("segredo-box");if (box.style.display === "block") {box.style.display = "none";} else {box.style.display = "block";box.scrollIntoView({ behavior: 'smooth' });}}const retirada = document.getElementById("retirada").value;const valor = document.getElementById("valor").value;if (!cliente || !defeito || !valor) {alert("Por favor, preencha pelo menos o Nome, o Problema e o Valor!");return;}const novaOS = {cliente,whatsapp,defeito,servico,retirada,valor,data: new Date().toLocaleDateString('pt-BR')};let historico = JSON.parse(localStorage.getItem("caetano_motores_os")) || [];historico.unshift(novaOS);localStorage.setItem("caetano_motores_os", JSON.stringify(historico));carregarHistorico();limparCampos();alert("Serviço guardado no sistema!");}function carregarHistorico() {const lista = document.getElementById("lista-os");lista.innerHTML = "";let historico = JSON.parse(localStorage.getItem("caetano_motores_os")) || [];if (historico.length === 0) {lista.innerHTML = "Nenhum motor ou bomba registrado no histórico ainda.";return;}historico.forEach(os => {const item = document.createElement("div");item.className = "os-item";item.innerHTML = <div class="os-header"> <span>${os.cliente}</span> <span class="os-date">${os.data}</span> </div> <p><strong>Problema:</strong> ${os.defeito}</p> <p><strong>Serviço:</strong> ${os.servico || 'Não informado'}</p> <div class="badge-retirada">📦 Entrega: ${os.retirada || 'A combinar'}</div> <span class="price-tag">Valor: R$ ${parseFloat(os.valor).toFixed(2)}</span>;lista.appendChild(item);});}function enviarWhatsApp() {const cliente = document.getElementById("cliente").value;const whatsapp = document.getElementById("whatsapp").value.replace(/\D/g, '');const defeito = document.getElementById("defeito").value;const servico = document.getElementById("servico").value;const retirada = document.getElementById("retirada").value;const valor = document.getElementById("valor").value;if (!cliente || !valor || !whatsapp) {alert("Para enviar o WhatsApp, coloque o Nome, o Celular do Cliente e o Valor!");return;}let mensagem = Olá ${cliente}! Aqui é a *Caetano Motores*. 👍%0A%0A;mensagem += *Problema:* ${defeito}%0A;if(servico) {mensagem += *Serviço:* ${servico}%0A;}mensagem += *Status de Entrega:* ${retirada}%0A;mensagem += *Valor total:* R$ ${parseFloat(valor).toFixed(2)}%0A%0A;mensagem += Seu equipamento está pronto! Qualquer dúvida, estamos à disposição do amigo.;const url = https://wa.me{whatsapp}?text=${mensagem};window.open(url, '_blank');}function limparCampos() {document.getElementById("cliente").value = "";document.getElementById("whatsapp").value = "";document.getElementById("defeito").value = "";document.getElementById("servico").value = "";document.getElementById("valor").value = "";document.getElementById("retirada").selectedIndex = 0;}// Função do Olho Mágicofunction revelarSegredo() {const box = document.getEleme
+// Coloca a data de hoje automaticamente no campo da agenda ao abrirdocument.addEventListener("DOMContentLoaded", () => {const hoje = new Date().toISOString().split('T')[0];document.getElementById("data_entrada").value = hoje;carregarListas();});function salvarOS() {const cliente = document.getElementById("cliente").value;const whatsapp = document.getElementById("whatsapp").value;const equipamento = document.getElementById("equipamento").value;const data_entrada = document.getElementById("data_entrada").value;const defeito = document.getElementById("defeito").value;const servico = document.getElementById("servico").value;const valor = document.getElementById("valor").value;if (!cliente || !equipamento || !valor) {alert("Por favor, preencha o Nome do Cliente, o Motor/Bomba e o Valor!");return;}// Formata a data para visualização brasileiraconst dataFormatada = data_entrada ? data_entrada.split('-').reverse().join('/') : new Date().toLocaleDateString('pt-BR');const novaOS = {id: Date.now(),cliente,whatsapp,equipamento,data_entrada: dataFormatada,defeito,servico,valor,status: 'oficina' // inicial no balcão da oficina};let historico = JSON.parse(localStorage.getItem("caetano_motores_os")) || [];historico.unshift(novaOS);localStorage.setItem("caetano_motores_os", JSON.stringify(historico));carregarListas();limparCampos();alert("Equipamento cadastrado com sucesso na oficina!");}function carregarListas() {const listaOficina = document.getElementById("lista-oficina");const listaGaveta = document.getElementById("gaveta-retirados");listaOficina.innerHTML = "";listaGaveta.innerHTML = "";let historico = JSON.parse(localStorage.getItem("caetano_motores_os")) || [];let contOficina = 0;let contRetirados = 0;let totalLanche = 0;historico.forEach(os => {const item = document.createElement("div");item.className = "os-item";if (os.status === 'oficina') {contOficina++;item.innerHTML = <div class="os-header"> <span>👤 ${os.cliente}</span> <span class="os-date">📅 Entrada: ${os.data_entrada}</span> </div> <p><strong>⚙️ Equipamento:</strong> ${os.equipamento}</p> <p><strong>⚠️ Defeito:</strong> ${os.defeito || 'Não informado'}</p> <p><strong>🔧 Serviço:</strong> ${os.servico || 'Em análise'}</p> <span class="price-tag">Orçamento: R$ ${parseFloat(os.valor).toFixed(2)}</span><br> <button class="btn-retirar" onclick="retirarEquipamento(${os.id})">📦 Dar Baixa (Mandar p/ Gaveta de Retirados)</button>;listaOficina.appendChild(item);} else if (os.status === 'retirado') {contRetirados++;totalLanche += parseFloat(os.valor);item.style.borderColor = "#ff9800";item.innerHTML = <div class="os-header" style="color: #e65100;"> <span>👤 ${os.cliente} (Entregue)</span> <span class="os-date">📅 Entrou: ${os.data_entrada}</span> </div> <p><strong>⚙️ Equipamento:</strong> ${os.equipamento}</p> <span class="price-tag" style="background: #fff3e0; color: #e65100;">Pago: R$ ${parseFloat(os.valor).toFixed(2)}</span> <span class="badge-info" style="background: #ffe0b2;">✅ Pronto e Retirado</span>;listaGaveta.appendChild(item);}});if (contOficina === 0) {listaOficina.innerHTML = "Nenhum motor ou bomba no balcão da oficina agora.";}if (contRetirados === 0) {listaGaveta.innerHTML = "Nenhum motor retirado hoje ainda.";} else {// Adiciona o fechamento do caixa do lanche da tarde no topo da gavetaconst resumoLanche = document.createElement("div");resumoLanche.style.marginBottom = "15px";resumoLanche.style.fontWeight = "bold";resumoLanche.style.color = "#e65100";resumoLanche.innerHTML = ☕ Total liberado na Gaveta para o Caixa/Lanche: <span style="font-size:18px;">R$ ${totalLanche.toFixed(2)}</span>;listaGaveta.insertBefore(resumoLanche, listaGaveta.firstChild);}}function retirarEquipamento(id) {let historico = JSON.parse(localStorage.getItem("caetano_motores_os")) || [];historico = historico.map(os => {if (os.id === id) {os.status = 'retirado';}return os;});localStorage.setItem("caetano_motores_os", JSON.stringify(historico));carregarListas();alert("Motor enviado para a Gaveta de Retirados com sucesso!");}function enviarWhatsApp() {const cliente = document.getElementById("cliente").value;const whatsapp = document.getElementById("whatsapp").value.replace(/\D/g, '');const equipamento = document.getElementById("equipamento").value;const defeito = document.getElementById("defeito").value;const servico = document.getElementById("servico").value;const valor = document.getElementById("valor").value;if (!cliente || !valor || !whatsapp || !equipamento) {alert("Para enviar o WhatsApp, preencha o Nome, Celular, o Equipamento e o Valor!");return;}let mensagem = Olá ${cliente}! Aqui é a *Caetano Motores*. 👍%0A%0A;mensagem += *Equipamento:* ${equipamento}%0A;mensagem += *Problema relatado:* ${defeito}%0A;if(servico) {mensagem += *Serviço executado:* ${servico}%0A;}mensagem += *Valor total:* R$ ${parseFloat(valor).toFixed(2)}%0A%0A;mensagem += Seu equipamento está pronto! Qualquer dúvida, estamos à sua disposição.;const url = https://wa.me{whatsapp}?text=${mensagem};window.open(url, '_blank');}function limparCampos() {document.getElementById("cliente").value = "";document.getElementById("whatsapp").value = "";document.getElementById("equipamento").value = "";document.getElementById("defeito").value = "";document.getElementById("servico").value = "";document.getElementById("valor").value = "";const hoje = new Date().toISOString().split('T')[0];document.getElementById("data_entrada").value = hoje;}function revelarSegredo() {const box = document.getElementById("segredo-box");if (box.style.display === "block") {box.style.display = "none";} else {box.style.display = "block";box.scrollIntoView({ behavior: 'smooth' });}}
+### O que mudou e como testar:
+1. Copie todo esse código novo e cole por cima do seu arquivo `index.html` lá no GitHub.
+2. Salve as alterações e espere um minutinho.
+3. No seu navegador, aperte **Ctrl + F5** para limpar a memória antiga e carregar essa versão turbinada.
+4. Faça um teste: cadastre um motor, clique em **Salvar** e veja ele aparecer na seção de andamento. Depois, clique no botão laranja **"Dar Baixa"** e assista ele ir direto para a **Gaveta de Retirados**, somando o dinheiro automático do lanche da tarde na tela!
 
 <FollowUp>
-Ficou do jeitinho que você imaginou? Quando testar no navegador, clique no **Olho Mágico** lá embaixo para ver a caixinha secreta se abrindo com as dicas! Se quiser **mudar os textos das dicas do Mestre**, me avise!
+Mande o código para o ar e faça um teste! Os botões voltaram a **funcionar e salvar tudo bonitinho** no histórico?
 </FollowUp>
-</script>
     
-
+</script>   
 </body>
 </html>

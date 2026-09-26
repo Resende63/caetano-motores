@@ -3,196 +3,280 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Caetano Motores - Sistemas de Gestão</title>
+    <title>Gestão Caetano Motores</title>
     <style>
-        /* Fundo branco com degradê verde claro no topo */
-        body { 
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
-            background: linear-gradient(180deg, #e8f5e9 0%, #ffffff 100%); 
-            color: #333; 
-            margin: 0; 
-            padding: 20px;
-            min-height: 100vh;
+        :root {
+            --primary: #2e7d32; /* Verde Motor */
+            --bg: #121212;
+            --card: #1e1e1e;
+            --text: #ffffff;
+            --text-secondary: #aaaaaa;
         }
-        h1 { color: #1b5e20; margin-top: 40px; }
-        .subtitulo { color: #666; font-size: 1.1em; }
-        
-        /* Container dos Planos */
-        .container { display: flex; justify-content: center; gap: 25px; margin-top: 40px; flex-wrap: wrap; }
-        
-        /* Cartões de Planos */
-        .card { 
-            background: #ffffff; 
-            border: 1px solid #e0e0e0; 
-            border-radius: 12px; 
-            padding: 30px; 
-            width: 290px; 
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-        .card:hover { transform: translateY(-5px); box-shadow: 0 8px 24px rgba(0,0,0,0.1); }
-        
-        /* Destaque do plano Intermediário */
-        .card.destaque { 
-            border: 2px solid #25D366; 
-            position: relative;
-        }
-        .selo {
-            position: absolute;
-            top: -12px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: #25D366;
-            color: white;
-            padding: 4px 15px;
-            font-size: 0.8em;
-            font-weight: bold;
-            border-radius: 20px;
-        }
-        
-        .preco { font-size: 2em; color: #1b5e20; font-weight: bold; margin: 15px 0; }
-        .recursos { text-align: left; list-style: none; padding: 0; }
-        .recursos li { margin: 10px 0; color: #555; }
-        .recursos li.indisponivel { color: #ccc; text-decoration: line-through; }
-        
-        /* Botão estilo WhatsApp */
-        .btn-whatsapp { 
-            background-color: #25D366; 
-            color: white; 
-            padding: 12px 25px; 
-            border: none; 
-            border-radius: 25px; 
-            font-weight: bold; 
-            font-size: 1em;
-            cursor: pointer; 
-            display: inline-block; 
-            width: 85%; 
-            margin-top: 20px; 
-            text-decoration: none;
-            box-shadow: 0 4px 10px rgba(37, 211, 102, 0.3);
-            transition: background 0.2s;
-        }
-        .btn-whatsapp:hover { background-color: #128C7E; }
-        .btn-secundario { background-color: #f0f2f5; color: #555; box-shadow: none; }
-        .btn-secundario:hover { background-color: #e4e6eb; }
 
-        /* Rodapé com Dados do Cliente */
-        .footer { margin-top: 60px; padding: 30px; background: #ffffff; border-top: 1px solid #e0e0e0; border-radius: 8px; font-size: 0.95em; color: #444; }
-        .footer h3 { color: #1b5e20; margin-bottom: 5px; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            color: var(--primary);
+            text-align: center;
+            margin-bottom: 5px;
+        }
+
+        p.subtitle {
+            text-align: center;
+            color: var(--text-secondary);
+            margin-top: 0;
+            margin-bottom: 25px;
+        }
+
+        .card {
+            background-color: var(--card);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+            border-left: 5px solid var(--primary);
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: var(--text-secondary);
+            font-weight: bold;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #333;
+            background-color: #2a2a2a;
+            color: #fff;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+
+        textarea {
+            resize: vertical;
+            height: 80px;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-bottom: 10px;
+            transition: 0.2s;
+        }
+
+        .btn-save {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .btn-whatsapp {
+            background-color: #25d366;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        button:hover {
+            opacity: 0.9;
+            transform: scale(0.99);
+        }
+
+        .history-title {
+            margin-top: 30px;
+            color: var(--primary);
+            border-bottom: 1px solid #333;
+            padding-bottom: 5px;
+        }
+
+        .os-item {
+            background-color: var(--card);
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 10px;
+            border-left: 3px solid #555;
+        }
+
+        .os-header {
+            display: flex;
+            justify-content: space-between;
+            color: var(--primary);
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .os-date {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        .price-tag {
+            color: #25d366;
+            font-weight: bold;
+            margin-top: 5px;
+            display: block;
+        }
     </style>
 </head>
 <body>
 
-    <h1>Sistemas de Gestão Caetano Motores</h1>
-    <p class="subtitulo">Escolha o sistema ideal para organizar sua oficina de motores e bombas d'água</p>
+<div class="container">
+    <h1>Caetano Motores</h1>
+    <p class="subtitle">Controle de Serviços Simplificado</p>
 
-    <div class="container">
-        <!-- Plano Simples -->
-        <div class="card">
-            <h3>Plano Simples</h3>
-            <div class="preco">R$ 49<span style="font-size: 0.5em;">/mês</span></div>
-            <ul class="recursos">
-                <li>✓ Site de Apresentação</li>
-                <li>✓ Seus Contatos na Internet</li>
-                <li class="indisponivel">✕ Cadastro de Clientes</li>
-                <li class="indisponivel">✕ Agenda e Fluxo de Caixa</li>
-            </ul>
-            <a href="https://wa.me" target="_blank" class="btn-whatsapp btn-secundario">Quero este</a>
+    <div class="card">
+        <div class="form-group">
+            <label for="cliente">Nome do Cliente</label>
+            <input type="text" id="cliente" placeholder="Ex: João Silva">
         </div>
 
-        <!-- Plano Intermediário -->
-        <div class="card destaque">
-            <div class="selo">MELHOR CUSTO-BENEFÍCIO</div>
-            <h3>Plano Intermediário</h3>
-            <div class="preco" style="font-size: 1.2em;">Sob Consulta</div>.
-                <li>✓ <b>Cadastro de Clientes Completo</b></li>
-                <li>✓ <b>Agendamento de Serviços</b></li>
-                <li>✓ <b>Entrada e Saída de Dinheiro</b></li>
-                <li>✓ Armazenamento/Backup Interno</li>
-                <li class="indisponivel">✕ Emissão de Nota Fiscal</li>
-            </ul>
-            <a href="https://wa.me" target="_blank" class="btn-whatsapp">Contratar Sistema</a>
+        <div class="form-group">
+            <label for="whatsapp">WhatsApp do Cliente (com DDD)</label>
+            <input type="text" id="whatsapp" placeholder="Ex: 27999998888">
         </div>
 
-        <!-- Plano Premium -->
-        <div class="card">
-            <h3>Plano Premium</h3>
-            <div class="preco">R$ 349<span style="font-size: 0.5em;">/mês</span></div>
-            <ul class="recursos">
-                <li>✓ Tudo do Intermediário</li>
-                <li>✓ Emissão de Nota Fiscal (NFe)</li>
-                <li>✓ Backup Automático em Nuvem</li>
-                <li>✓ Suporte 24 Horas</li>
-            </ul>
-            <a href="https://wa.me" target="_blank" class="btn-whatsapp btn-secundario">Quero o Premium</a>
+        <div class="form-group">
+            <label for="defeito">O que o cliente disse? (Problema)</label>
+            <textarea id="defeito" placeholder="Ex: Motor é novo porém parou"></textarea>
         </div>
+
+        <div class="form-group">
+            <label for="servico">O que o Caetano fez? (Solução)</label>
+            <textarea id="servico" placeholder="Ex: Trocado rolamento travado e rebobinado os fios"></textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="valor">Valor do Serviço (R\$)</label>
+            <input type="number" id="valor" placeholder="Ex: 350">
+        </div>
+
+        <button class="btn-save" onclick="salvarOS()">💾 Salvar no Histórico</button>
+        <button class="btn-whatsapp" onclick="enviarWhatsApp()">💬 Enviar Orçamento via WhatsApp</button>
     </div>
 
-    <!-- Informações da Caetano Motores -->
-    <div class="footer">
-        <h3>Caetano Motores</h3>
+    <h3 class="history-title">Últimos Serviços Registrados</h3>
+    <div id="lista-os"></div>
+</div>
+
+<script>
+    // Carrega os dados salvos ao abrir a página
+    document.addEventListener("DOMContentLoaded", carregarHistorico);
+
+    function salvarOS() {
+        const cliente = document.getElementById("cliente").value;
+        const whatsapp = document.getElementById("whatsapp").value;
+        const defeito = document.getElementById("defeito").value;
+        const servico = document.getElementById("servico").value;
+        const valor = document.getElementById("valor").value;
+
+        if (!cliente || !defeito || !valor) {
+            alert("Por favor, preencha pelo menos o Nome, o Problema e o Valor!");
+            return;
+        }
+
+        const novaOS = {
+            cliente,
+            whatsapp,
+            defeito,
+            servico,
+            valor,
+            data: new Date().toLocaleDateString('pt-BR')
+        };
+
+        let historico = JSON.parse(localStorage.getItem("caetano_motores_os")) || [];
+        historico.unshift(novaOS); // Adiciona no início da lista
+        localStorage.setItem("caetano_motores_os", JSON.stringify(historico));
+
+        carregarHistorico();
+        limparCampos();
+        alert("Serviço salvo com sucesso no histórico!");
+    }
+
+    function carregarHistorico() {
+        const lista = document.getElementById("lista-os");
+        lista.innerHTML = "";
         
-        <p>Proprietário: <b>Cerineu Caetano</b> | Especialistas em Enrolamento de Motores Elétricos e Conserto de Bombas D'água</p>
-        <p>📞 Telefones: 27 99763-4705 / 99787-5213 / 99951-8833</p>
-        <p>✉ E-mail: caetanomotorores@2013gmail.com</p>
-        <p>📍 Endereço: Av. Lourival Nunes, 1336 - Jd. Limoeiro - Serra - ES</p>
-    </div><!-- Botão Flutuante do WhatsApp Suspenso -->
-<a href="https://wa.me" target="_blank" style="
-    position: fixed;
-    width: 60px;
-    height: 60px;
-    bottom: 40px;
-    right: 40px;
-    background-color: #25D366;
-    color: #FFF;
-    border-radius: 50px;
-    text-align: center;
-    font-size: 30px;
-    box-shadow: 2px 2px 10px rgba(0,0,0,0.3);
-    z-index: 1000;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-decoration: none;
-">
-    !-- Botão Flutuante do WhatsApp -->
-<a href="https://wa.me" class="btn-flutuante" target="_blank">
-    <img src="https://wikimedia.org" alt="WhatsApp">
-</a>
+        let historico = JSON.parse(localStorage.getItem("caetano_motores_os")) || [];
 
-<!-- Estilos do Botão -->
-<style>
-.btn-flutuante {
-    position: fixed;
-    width: 60px;
-    height: 60px;
-    bottom: 20px;
-    right: 20px;
-    background-color: #25d366;
-    color: #FFF;
-    border-radius: 50px;
-    text-align: center;
-    font-size: 30px;
-    box-shadow: 1px 1px 10px rgba(0,0,0,0.3);
-    z-index: 1000;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: transform 0.3s;
-}
+        if (historico.length === 0) {
+            lista.innerHTML = "<p style='color: #aaa; text-align: center;'>Nenhum serviço registrado ainda.</p>";
+            return;
+        }
 
-.btn-flutuante:hover {
-    transform: scale(1.1);
-}
+        historico.forEach(os => {
+            const item = document.createElement("div");
+            item.className = "os-item";
+            item.innerHTML = `
+                <div class="os-header">
+                    <span>${os.cliente}</span>
+                    <span class="os-date">${os.data}</span>
+                </div>
+                <p><strong>Problema relatado:</strong> ${os.defeito}</p>
+                <p><strong>Serviço feito:</strong> ${os.servico || 'Não informado'}</p>
+                <span class="price-tag">Valor: R$ ${parseFloat(os.valor).toFixed(2)}</span>
+            `;
+            lista.appendChild(item);
+        });
+    }
 
-.btn-flutuante img {
-    width: 35px;
-    height: 35px;
-}
-</style>
-    📞
-</a>
-<p>Sistema desenvolvido para <b>Caetano Motores</b> por <b>Mauro Vieira de Resende</b></p>
+    function enviarWhatsApp() {
+        const cliente = document.getElementById("cliente").value;
+        const whatsapp = document.getElementById("whatsapp").value.replace(/\D/g, ''); // Remove o que não for número
+        const defeito = document.getElementById("defeito").value;
+        const servico = document.getElementById("servico").value;
+        const valor = document.getElementById("valor").value;
+
+        if (!cliente || !valor || !whatsapp) {
+            alert("Para enviar o WhatsApp, você precisa preencher o Nome, o Celular do Cliente e o Valor!");
+            return;
+        }
+
+        // Monta a mensagem bonita automática
+        let mensagem = `Olá ${cliente}! Aqui é o Caetano Motores. 👍%0A%0A`;
+        mensagem += `*Problema relatado:* ${defeito}%0A`;
+        if(servico) {
+            mensagem += `*Serviço executado:* ${servico}%0A`;
+        }
+        mensagem += `*Valor total:* R$ ${parseFloat(valor).toFixed(2)}%0A%0A`;
+        mensagem += `Seu motor está pronto/orçado! Qualquer dúvida estou à disposição.`;
+
+        // Abre o link do WhatsApp com o número e a mensagem
+        const url = `https://wa.me{whatsapp}?text=${mensagem}`;
+        window.open(url, '_blank');
+    }
+
+    function limparCampos() {
+        document.getElementById("cliente").value = "";
+        document.getElementById("whatsapp").value = "";
+        document.getElementById("defeito").value = "";
+        document.getElementById("servico").value = "";
+        document.getElementById("valor").value = "";
+    }
+</script>
 
 </body>
 </html>

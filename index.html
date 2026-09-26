@@ -7,12 +7,12 @@
     <style>
         :root {
             --primary: #4caf50; /* Verde Abacate do Cartão */
-            --primary-dark: #388e3c;
-            --bg: #121212;
-            --card: #1e1e1e;
-            --text: #ffffff;
-            --text-secondary: #aaaaaa;
-            --accent-red: #d32f2f; /* Vermelho do Raio CM */
+            --bg: #e0f2f1; /* Verde Piscina Suave */
+            --card: #ffffff;
+            --text: #263238;
+            --text-secondary: #546e7a;
+            --accent-red: #ff1744; /* Vermelho do Raio CM */
+            --neon-abacate: #66ff66; /* Verde Fluorescente Aceso */
         }
 
         body {
@@ -31,35 +31,41 @@
         .logo-box {
             text-align: center;
             margin-bottom: 20px;
+            background: white;
+            padding: 15px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(76, 175, 80, 0.2);
+            border: 2px solid var(--neon-abacate);
         }
 
         h1 {
-            color: var(--primary);
+            color: #2e7d32;
             text-align: center;
-            margin-bottom: 5px;
-            font-size: 28px;
+            margin: 0 0 5px 0;
+            font-size: 26px;
             text-transform: uppercase;
             letter-spacing: 1px;
         }
 
         .raio {
             color: var(--accent-red);
+            text-shadow: 0 0 5px rgba(255, 23, 68, 0.5);
         }
 
         p.subtitle {
             text-align: center;
             color: var(--text-secondary);
-            margin-top: 0;
-            margin-bottom: 25px;
+            margin: 0;
             font-style: italic;
+            font-size: 14px;
         }
 
         .card {
             background-color: var(--card);
             padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
-            border-top: 4px solid var(--primary);
+            border-radius: 12px;
+            box-shadow: 0 0 15px rgba(102, 255, 102, 0.4); /* Efeito Fluorescente */
+            border: 3px solid var(--primary);
             margin-bottom: 20px;
         }
 
@@ -69,37 +75,41 @@
 
         label {
             display: block;
-            margin-bottom: 5px;
-            color: var(--primary);
+            margin-bottom: 6px;
+            color: #1b5e20;
             font-weight: bold;
+            font-size: 15px;
         }
 
-        input, textarea {
+        input, textarea, select {
             width: 100%;
             padding: 12px;
-            border: 1px solid #333;
-            background-color: #2a2a2a;
-            color: #fff;
-            border-radius: 4px;
+            border: 2px solid #cfd8dc;
+            background-color: #fafafa;
+            color: var(--text);
+            border-radius: 6px;
             box-sizing: border-box;
             font-size: 16px;
+            transition: 0.3s;
         }
 
-        input:focus, textarea:focus {
+        input:focus, textarea:focus, select:focus {
             border-color: var(--primary);
+            background-color: #fff;
             outline: none;
+            box-shadow: 0 0 8px rgba(102, 255, 102, 0.6);
         }
 
         textarea {
             resize: vertical;
-            height: 90px;
+            height: 80px;
         }
 
         button {
             width: 100%;
             padding: 14px;
             border: none;
-            border-radius: 4px;
+            border-radius: 6px;
             font-size: 16px;
             font-weight: bold;
             cursor: pointer;
@@ -109,7 +119,8 @@
 
         .btn-save {
             background-color: var(--primary);
-            color: black; /* Texto escuro contrasta melhor no verde abacate */
+            color: white;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
         }
 
         .btn-whatsapp {
@@ -121,30 +132,42 @@
             gap: 10px;
         }
 
+        .btn-olho {
+            background-color: #009688;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 15px;
+            box-shadow: 0 4px 10px rgba(0, 150, 136, 0.3);
+        }
+
         button:hover {
-            opacity: 0.9;
+            filter: brightness(0.95);
             transform: scale(0.99);
         }
 
         .history-title {
             margin-top: 30px;
-            color: var(--primary);
-            border-bottom: 2px solid var(--primary);
+            color: #1b5e20;
+            border-bottom: 3px solid var(--primary);
             padding-bottom: 5px;
         }
 
         .os-item {
             background-color: var(--card);
             padding: 15px;
-            border-radius: 6px;
-            margin-bottom: 10px;
-            border-left: 4px solid var(--primary);
+            border-radius: 10px;
+            margin-bottom: 12px;
+            border: 2px solid var(--primary);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
         }
 
         .os-header {
             display: flex;
             justify-content: space-between;
-            color: var(--primary);
+            color: #2e7d32;
             font-weight: bold;
             margin-bottom: 8px;
         }
@@ -155,20 +178,69 @@
         }
 
         .price-tag {
-            color: #25d366;
+            color: #2e7d32;
             font-weight: bold;
-            margin-top: 5px;
+            margin-top: 8px;
             display: block;
             font-size: 18px;
+            background: #e8f5e9;
+            padding: 5px 10px;
+            border-radius: 4px;
+            width: fit-content;
+        }
+
+        .badge-retirada {
+            display: inline-block;
+            background-color: #eceff1;
+            color: #37474f;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 13px;
+            font-weight: bold;
+            margin-top: 5px;
+        }
+
+        /* Seção Secreta do Olho Mágico */
+        .segredo-box {
+            display: none;
+            background: #ffffff;
+            border: 3px dashed #009688;
+            padding: 15px;
+            border-radius: 12px;
+            margin-top: 15px;
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .segredo-box h4 {
+            color: #00796b;
+            margin-top: 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .segredo-box ul {
+            margin: 0;
+            padding-left: 20px;
+            color: #004d40;
+        }
+
+        .segredo-box li {
+            margin-bottom: 8px;
         }
 
         footer {
             text-align: center;
             margin-top: 40px;
             color: var(--text-secondary);
-            font-size: 12px;
+            font-size: 13px;
             line-height: 1.6;
-            border-top: 1px solid #333;
+            border-top: 2px solid #b2dfdb;
             padding-top: 15px;
         }
     </style>
@@ -194,12 +266,21 @@
 
         <div class="form-group">
             <label for="defeito">O que o cliente disse? (Problema)</label>
-            <textarea id="defeito" placeholder="Ex: O motor é novo, porém parou de funcionar sozinho."></textarea>
+            <textarea id="defeito" placeholder="Ex: O motor parou sozinho e cheira a queimado."></textarea>
         </div>
 
         <div class="form-group">
             <label for="servico">O que o Caetano fez? (Solução)</label>
-            <textarea id="servico" placeholder="Ex: Efetuada a troca do rolamento que estava travado e rebobinado os fios internos."></textarea>
+            <textarea id="servico" placeholder="Ex: Rolamento trocado e rebobinamento completo executado."></textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="retirada">Botão da Retirada (Como será entregue?)</label>
+            <select id="retirada">
+                <option value="Cliente vem buscar na oficina">🏃‍♂️ Cliente vem buscar na oficina</option>
+                <option value="Caetano vai entregar ao cliente">🚚 Caetano vai entregar ao cliente</option>
+                <option value="Já foi retirado e entregue">✅ Já foi retirado e entregue</option>
+            </select>
         </div>
 
         <div class="form-group">
@@ -214,9 +295,22 @@
     <h3 class="history-title">Últimos Serviços Registrados</h3>
     <div id="lista-os"></div>
 
+    <!-- O Olho Mágico: O Grande Diferencial Interativo -->
+    <button class="btn-olho" onclick="revelarSegredo()">👁️✨ Olho Mágico: Dicas do Mestre</button>
+    
+    <div id="segredo-box" class="segredo-box">
+        <h4>🛠️ Segredos do Caetano para o seu Motor durar mais:</h4>
+        <ul>
+            <li><strong>Queda de Energia:</strong> Se a luz da rua piscar, desligue o motor imediatamente da tomada para não queimar as bobinas novas.</li>
+            <li><strong>Trabalho Seco:</strong> Nunca ligue a bomba d'água sem água circulando dentro dela, ou o selo mecânico vai derreter.</li>
+            <li><strong>Barulho estranho:</strong> Se notar um ronco pesado, traga direto para trocar o rolamento antes que o motor trave de vez!</li>
+        </ul>
+    </div>
+
     <footer>
         <strong>Cerineu Caetano</strong> - Proprietário<br>
-        Av. Lorival Nunes, 1336 - Jd. Limoeiro - Serra - ES
+        Av. Lorival Nunes, 1336 - Jd. Limoeiro - Serra - ES <br>
+        <small style="color:#78909c;">Desenvolvido com Sabedoria por Mauro Vieira de Resende</small>
     </footer>
 </div>
 
@@ -228,90 +322,13 @@
         const whatsapp = document.getElementById("whatsapp").value;
         const defeito = document.getElementById("defeito").value;
         const servico = document.getElementById("servico").value;
-        const valor = document.getElementById("valor").value;
+const retirada = document.getElementById("retirada").value;const valor = document.getElementById("valor").value;if (!cliente || !defeito || !valor) {alert("Por favor, preencha pelo menos o Nome, o Problema e o Valor!");return;}const novaOS = {cliente,whatsapp,defeito,servico,retirada,valor,data: new Date().toLocaleDateString('pt-BR')};let historico = JSON.parse(localStorage.getItem("caetano_motores_os")) || [];historico.unshift(novaOS);localStorage.setItem("caetano_motores_os", JSON.stringify(historico));carregarHistorico();limparCampos();alert("Serviço guardado no sistema!");}function carregarHistorico() {const lista = document.getElementById("lista-os");lista.innerHTML = "";let historico = JSON.parse(localStorage.getItem("caetano_motores_os")) || [];if (historico.length === 0) {lista.innerHTML = "Nenhum motor ou bomba registrado no histórico ainda.";return;}historico.forEach(os => {const item = document.createElement("div");item.className = "os-item";item.innerHTML = <div class="os-header"> <span>${os.cliente}</span> <span class="os-date">${os.data}</span> </div> <p><strong>Problema:</strong> ${os.defeito}</p> <p><strong>Serviço:</strong> ${os.servico || 'Não informado'}</p> <div class="badge-retirada">📦 Entrega: ${os.retirada || 'A combinar'}</div> <span class="price-tag">Valor: R$ ${parseFloat(os.valor).toFixed(2)}</span>;lista.appendChild(item);});}function enviarWhatsApp() {const cliente = document.getElementById("cliente").value;const whatsapp = document.getElementById("whatsapp").value.replace(/\D/g, '');const defeito = document.getElementById("defeito").value;const servico = document.getElementById("servico").value;const retirada = document.getElementById("retirada").value;const valor = document.getElementById("valor").value;if (!cliente || !valor || !whatsapp) {alert("Para enviar o WhatsApp, coloque o Nome, o Celular do Cliente e o Valor!");return;}let mensagem = Olá ${cliente}! Aqui é a *Caetano Motores*. 👍%0A%0A;mensagem += *Problema:* ${defeito}%0A;if(servico) {mensagem += *Serviço:* ${servico}%0A;}mensagem += *Status de Entrega:* ${retirada}%0A;mensagem += *Valor total:* R$ ${parseFloat(valor).toFixed(2)}%0A%0A;mensagem += Seu equipamento está pronto! Qualquer dúvida, estamos à disposição do amigo.;const url = https://wa.me{whatsapp}?text=${mensagem};window.open(url, '_blank');}function limparCampos() {document.getElementById("cliente").value = "";document.getElementById("whatsapp").value = "";document.getElementById("defeito").value = "";document.getElementById("servico").value = "";document.getElementById("valor").value = "";document.getElementById("retirada").selectedIndex = 0;}// Função do Olho Mágicofunction revelarSegredo() {const box = document.getElementById("segredo-box");if (box.style.display === "block") {box.style.display = "none";} else {box.style.display = "block";box.scrollIntoView({ behavior: 'smooth' });}}const retirada = document.getElementById("retirada").value;const valor = document.getElementById("valor").value;if (!cliente || !defeito || !valor) {alert("Por favor, preencha pelo menos o Nome, o Problema e o Valor!");return;}const novaOS = {cliente,whatsapp,defeito,servico,retirada,valor,data: new Date().toLocaleDateString('pt-BR')};let historico = JSON.parse(localStorage.getItem("caetano_motores_os")) || [];historico.unshift(novaOS);localStorage.setItem("caetano_motores_os", JSON.stringify(historico));carregarHistorico();limparCampos();alert("Serviço guardado no sistema!");}function carregarHistorico() {const lista = document.getElementById("lista-os");lista.innerHTML = "";let historico = JSON.parse(localStorage.getItem("caetano_motores_os")) || [];if (historico.length === 0) {lista.innerHTML = "Nenhum motor ou bomba registrado no histórico ainda.";return;}historico.forEach(os => {const item = document.createElement("div");item.className = "os-item";item.innerHTML = <div class="os-header"> <span>${os.cliente}</span> <span class="os-date">${os.data}</span> </div> <p><strong>Problema:</strong> ${os.defeito}</p> <p><strong>Serviço:</strong> ${os.servico || 'Não informado'}</p> <div class="badge-retirada">📦 Entrega: ${os.retirada || 'A combinar'}</div> <span class="price-tag">Valor: R$ ${parseFloat(os.valor).toFixed(2)}</span>;lista.appendChild(item);});}function enviarWhatsApp() {const cliente = document.getElementById("cliente").value;const whatsapp = document.getElementById("whatsapp").value.replace(/\D/g, '');const defeito = document.getElementById("defeito").value;const servico = document.getElementById("servico").value;const retirada = document.getElementById("retirada").value;const valor = document.getElementById("valor").value;if (!cliente || !valor || !whatsapp) {alert("Para enviar o WhatsApp, coloque o Nome, o Celular do Cliente e o Valor!");return;}let mensagem = Olá ${cliente}! Aqui é a *Caetano Motores*. 👍%0A%0A;mensagem += *Problema:* ${defeito}%0A;if(servico) {mensagem += *Serviço:* ${servico}%0A;}mensagem += *Status de Entrega:* ${retirada}%0A;mensagem += *Valor total:* R$ ${parseFloat(valor).toFixed(2)}%0A%0A;mensagem += Seu equipamento está pronto! Qualquer dúvida, estamos à disposição do amigo.;const url = https://wa.me{whatsapp}?text=${mensagem};window.open(url, '_blank');}function limparCampos() {document.getElementById("cliente").value = "";document.getElementById("whatsapp").value = "";document.getElementById("defeito").value = "";document.getElementById("servico").value = "";document.getElementById("valor").value = "";document.getElementById("retirada").selectedIndex = 0;}// Função do Olho Mágicofunction revelarSegredo() {const box = document.getEleme
 
-        if (!cliente || !defeito || !valor) {
-            alert("Por favor, preencha pelo menos o Nome, o Problema e o Valor!");
-            return;
-        }
-
-        const novaOS = {
-            cliente,
-            whatsapp,
-            defeito,
-            servico,
-            valor,
-            data: new Date().toLocaleDateString('pt-BR')
-        };
-
-        let historico = JSON.parse(localStorage.getItem("caetano_motores_os")) || [];
-        historico.unshift(novaOS);
-        localStorage.setItem("caetano_motores_os", JSON.stringify(historico));
-
-        carregarHistorico();
-        limparCampos();
-        alert("Serviço guardado com sucesso!");
-    }
-
-    function carregarHistorico() {
-        const lista = document.getElementById("lista-os");
-        lista.innerHTML = "";
-        
-        let historico = JSON.parse(localStorage.getItem("caetano_motores_os")) || [];
-
-        if (historico.length === 0) {
-            lista.innerHTML = "<p style='color: #aaa; text-align: center;'>Nenhum motor ou bomba registrado no histórico ainda.</p>";
-            return;
-        }
-
-        historico.forEach(os => {
-            const item = document.createElement("div");
-            item.className = "os-item";
-            item.innerHTML = `
-                <div class="os-header">
-                    <span>${os.cliente}</span>
-                    <span class="os-date">${os.data}</span>
-                </div>
-                <p><strong>Problema relatado:</strong> ${os.defeito}</p>
-                <p><strong>Serviço feito:</strong> ${os.servico || 'Não informado'}</p>
-                <span class="price-tag">Valor: R$ ${parseFloat(os.valor).toFixed(2)}</span>
-            `;
-            lista.appendChild(item);
-        });
-    }
-
-    function enviarWhatsApp() {
-        const cliente = document.getElementById("cliente").value;
-        const whatsapp = document.getElementById("whatsapp").value.replace(/\D/g, '');
-        const defeito = document.getElementById("defeito").value;
-        const servico = document.getElementById("servico").value;
-        const valor = document.getElementById("valor").value;
-
-        if (!cliente || !valor || !whatsapp) {
-            alert("Para enviar o WhatsApp, coloque o Nome, o Celular do Cliente e o Valor!");
-            return;
-        }
-
-        let mensagem = `Olá ${cliente}! Aqui é a *Caetano Motores*. 👍%0A%0A`;
-        mensagem += `*Problema relatado:* ${defeito}%0A`;
-        if(servico) {
-            mensagem += `*Serviço executado:* ${servico}%0A`;
-        }
-        mensagem += `*Valor total:* R$ ${parseFloat(valor).toFixed(2)}%0A%0A`;
-        mensagem += `Seu equipamento está pronto! Qualquer dúvida, estamos à disposição.`;
-
-        const url = `https://wa.me{whatsapp}?text=${mensagem}`;
-        window.open(url, '_blank');
-    }
-
-    function limparCampos() {
-        document.getElementById("cliente").value = "";
-        document.getElementById("whatsapp").value = "";
-        document.getElementById("defeito").value = "";
-        document.getElementById("servico").value = "";
-        document.getElementById("valor").value = "";
-    }
+<FollowUp>
+Ficou do jeitinho que você imaginou? Quando testar no navegador, clique no **Olho Mágico** lá embaixo para ver a caixinha secreta se abrindo com as dicas! Se quiser **mudar os textos das dicas do Mestre**, me avise!
+</FollowUp>
 </script>
+    
 
 </body>
 </html>

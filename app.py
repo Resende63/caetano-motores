@@ -1,13 +1,9 @@
-from flask import Flask, request, jsonify, render_template
-from werkzeug.security import generate_password_hash
-import re
-import os  # Permite verificar as pastas do sistema
+import json
+import sqlite3
+from flask import Flask, flash, redirect, render_template, request, url_for
 
-# Identifica automaticamente se a pasta é 'Modelos' ou 'templates'
-pasta_visual = 'Modelos' if os.path.exists('Modelos') else 'templates'
-
-# Se você já tiver uma linha "app = Flask..." mais abaixo, substitua por esta:
-app = Flask(__name__, template_folder=pasta_visual)
+app = Flask(__name__)
+app.secret_key = "caetanos_motores_chave_secreta"
 
 DATABASE = "oficina.db"
 
@@ -115,13 +111,11 @@ def lancar_caixa():
         
     flash("Lançamento financeiro realizado!")
     return redirect(url_for("painel"))
+from flask import send_file
+import io
 
 @app.route("/backup")
 def fazer_backup():
-    import io
-    import json
-    from flask import send_file
-    
     conn = conectar_banco()
     cursor = conn.cursor()
     
@@ -132,16 +126,17 @@ def fazer_backup():
     }
     conn.close()
     
+    # Converte o dicionário em um arquivo de texto na memória
     json_str = json.dumps(backup_data, ensure_ascii=False, indent=4)
     file_object = io.BytesIO(json_str.encode('utf-8'))
     
+    # Envia o arquivo direto para o navegador do usuário fazer o download
     return send_file(
         file_object,
         mimetype='application/json',
         as_attachment=True,
         download_name='backup_caetano_motores.json'
     )
-
 
 class Port:
     def __init__(self, host="127.0.0.1", port=0, timeout=3.0, buffer_size=4096):
@@ -250,6 +245,24 @@ class Port:
     def __repr__(self):
         return f"Port(host={self.host!r}, port={self.port!r}, connected={self._connected})"
 
+# =========================================================================
+# ROTAS OPERACIONAIS - CAETANO MOTORES (BALCÃO DA OFICINA)
+# =========================================================================
+
+@app.route('/sistema/salvar-oficina', methods=['POST'])
+def salvar_oficina_motor():
+    """Recebe os dados do formulário do balcão e confirma o cadastro."""
+    cliente = request.form.get('cliente')
+    whatsapp = request.form.get('whatsapp')
+    equipamento = request.form.get('equipamento')
+    valor = request.form.get('valor')
+    
+    # Validação rápida de segurança corporativa
+    if not cliente or not equipamento or not valor:
+        return "Erro: Campos Nome, Equipamento e Valor são obrigatórios.", 400
+        
+    print(f"⚙️ Motor Cadastrado no Balcão: Cliente {cliente} | Equipamento: {equipamento}")
+    return "<h1>Equipamento cadastrado com sucesso na oficina!</h1>"
 
 import socket
 

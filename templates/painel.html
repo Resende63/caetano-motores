@@ -15,26 +15,33 @@
         }
         .header { background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); margin-bottom: 20px; text-align: center;}
         .header h1 { color: #1b5e20; margin: 0 0 10px 0; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
-        .modulo { background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); border-top: 4px solid #25D366; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; }
+        .modulo { background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); border-top: 4px solid #25D366; overflow-x: auto; }
         .modulo h2 { color: #1b5e20; margin-top: 0; border-bottom: 1px solid #eee; padding-bottom: 10px;}
         
         /* Formulários e Inputs */
         label { display: block; margin-top: 10px; font-weight: bold; font-size: 0.9em; }
         input, select { width: 100%; padding: 10px; margin-top: 5px; border: 1px solid #ccc; border-radius: 8px; box-sizing: border-box; }
         
-        /* Botões */
+        /* Botões Principais */
         .btn-whats { background-color: #25D366; color: white; padding: 12px; border: none; border-radius: 25px; font-weight: bold; font-size: 1em; cursor: pointer; width: 100%; margin-top: 15px; box-shadow: 0 4px 10px rgba(37, 211, 102, 0.2); transition: 0.2s;}
         .btn-whats:hover { background-color: #128C7E; }
         .btn-backup { background-color: #0288d1; box-shadow: 0 4px 10px rgba(2, 136, 209, 0.2); margin-bottom: 10px; width: auto; padding: 10px 30px;}
         .btn-backup:hover { background-color: #01579b; }
+
+        /* Botões Pequenos das Tabelas */
+        .btn-acao { padding: 5px 8px; border-radius: 6px; text-decoration: none; font-size: 0.8em; font-weight: bold; display: inline-block; margin-right: 3px; }
+        .btn-zap-mini { background-color: #e8f5e9; color: #1b5e20; border: 1px solid #25D366; }
+        .btn-ok { background-color: #e3f2fd; color: #0277bd; border: 1px solid #81d4fa; }
+        .btn-del { background-color: #ffebee; color: #c62828; border: 1px solid #ef9a9a; }
+        .status-ok { color: #1b5e20; font-weight: bold; font-size: 0.85em; }
         
         /* Tabelas */
-        table { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 0.9em; }
-        th, td { padding: 10px; border-bottom: 1px solid #eee; text-align: left; }
+        table { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 0.85em; }
+        th, td { padding: 8px; border-bottom: 1px solid #eee; text-align: left; }
         th { background-color: #f9f9f9; color: #1b5e20; }
         
-        .saldo-box { font-size: 1.5em; font-weight: bold; color: #1b5e20; margin-top: 15px; padding: 10px; background: #e8f5e9; border-radius: 8px; text-align: center;}
+        .saldo-box { font-size: 1.4em; font-weight: bold; color: #1b5e20; margin-top: 15px; padding: 10px; background: #e8f5e9; border-radius: 8px; text-align: center;}
         .alert { background: #fff3cd; color: #856404; padding: 10px; border-radius: 8px; margin-bottom: 20px; text-align: center; font-weight: bold;}
         .nfe-bloqueada { background: #ffebee; color: #c62828; padding: 15px; border-radius: 8px; font-weight: bold; font-size: 0.9em; text-align: center; margin-top: 15px; border: 1px solid #ffcdd2;}
         .footer { text-align: center; margin-top: 30px; padding: 15px; color: #666; font-size: 0.9em; }
@@ -65,8 +72,8 @@
                 <label>Nome do Cliente:</label>
                 <input type="text" name="nome" placeholder="Ex: João da Silva" required>
                 
-                <label>Telefone:</label>
-                <input type="text" name="telefone" placeholder="Ex: 27 99999-9999" required>
+                <label>Telefone (com DDD):</label>
+                <input type="text" name="telefone" placeholder="Ex: 27999999999" required>
                 
                 <label>Equipamento (Motor / Bomba):</label>
                 <input type="text" name="equipamento" placeholder="Ex: Motor Elétrico Trifásico 2HP">
@@ -76,14 +83,17 @@
 
             <table>
                 <thead>
-                    <tr><th>Nome</th><th>Telefone</th><th>Equipamento</th></tr>
+                    <tr><th>Nome</th><th>Equipamento</th><th>Ações</th></tr>
                 </thead>
                 <tbody>
                     {% for cliente in clientes %}
                     <tr>
-                        <td>{{ cliente.nome }}</td>
-                        <td>{{ cliente.telefone }}</td>
+                        <td><b>{{ cliente.nome }}</b><br><small>{{ cliente.telefone }}</small></td>
                         <td>{{ cliente.equipamento }}</td>
+                        <td>
+                            <a href="https://wa.me{{ cliente.telefone|replace(' ', '')|replace('-', '')|replace('(', '')|replace(')', '') }}" target="_blank" class="btn-acao btn-zap-mini" title="Chamar no WhatsApp">💬</a>
+                            <a href="/excluir_cliente/{{ cliente.id }}" class="btn-acao btn-del" onclick="return confirm('Excluir este cliente?')" title="Excluir">🗑️</a>
+                        </td>
                     </tr>
                     {% endfor %}
                 </tbody>
@@ -113,14 +123,25 @@
 
             <table>
                 <thead>
-                    <tr><th>Cliente</th><th>Data</th><th>Serviço</th></tr>
+                    <tr><th>Cliente / Serviço</th><th>Data</th><th>Ações</th></tr>
                 </thead>
                 <tbody>
                     {% for agendamento in agendamentos %}
                     <tr>
-                        <td>{{ agendamento.nome_cliente }}</td>
+                        <td>
+                            <b>{{ agendamento.nome_cliente }}</b><br>
+                            {{ agendamento.servico }}
+                            {% if agendamento.status == 'Concluído' %}
+                                <br><span class="status-ok">✅ Concluído</span>
+                            {% endif %}
+                        </td>
                         <td>{{ agendamento.data }}</td>
-                        <td>{{ agendamento.servico }}</td>
+                        <td>
+                            {% if agendamento.status != 'Concluído' %}
+                                <a href="/concluir_agendamento/{{ agendamento.id }}" class="btn-acao btn-ok" title="Marcar como Concluído">✅</a>
+                            {% endif %}
+                            <a href="/excluir_agendamento/{{ agendamento.id }}" class="btn-acao btn-del" onclick="return confirm('Excluir agendamento?')" title="Excluir">🗑️</a>
+                        </td>
                     </tr>
                     {% endfor %}
                 </tbody>
@@ -153,14 +174,16 @@
 
             <table>
                 <thead>
-                    <tr><th>Tipo</th><th>Descrição</th><th>Valor</th></tr>
+                    <tr><th>Descrição</th><th>Valor</th><th>Ação</th></tr>
                 </thead>
                 <tbody>
                     {% for lancamento in caixa %}
                     <tr>
-                        <td>{{ '🟢' if lancamento.tipo == 'Entrada' else '🔴' }}</td>
-                        <td>{{ lancamento.descricao }}</td>
+                        <td>{{ '🟢' if lancamento.tipo == 'Entrada' else '🔴' }} {{ lancamento.descricao }}</td>
                         <td>R$ {{ "%.2f"|format(lancamento.valor) }}</td>
+                        <td>
+                            <a href="/excluir_caixa/{{ lancamento.id }}" class="btn-acao btn-del" onclick="return confirm('Apagar lançamento?')" title="Excluir">🗑️</a>
+                        </td>
                     </tr>
                     {% endfor %}
                 </tbody>
@@ -169,17 +192,3 @@
 
         <!-- MÓDULO 4: NOTA FISCAL -->
         <div class="modulo" style="border-top-color: #c62828; background-color: #fafafa;">
-            <h2 style="color: #c62828;">📄 Nota Fiscal Eletrônica</h2>
-            <div class="nfe-bloqueada">
-                A emissão de nota fiscal eletrônica direta não está inclusa no Plano Intermediário.
-            </div>
-        </div>
-
-    </div>
-
-    <div class="footer">
-        <p>Sistema desenvolvido para <b>Caetano Motores</b> por <b>Mauro Vieira de Resende</b></p>
-    </div>
-
-</body>
-</html>

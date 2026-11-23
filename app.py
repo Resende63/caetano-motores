@@ -1,6 +1,7 @@
+import io
 import json
 import sqlite3
-from flask import Flask, flash, redirect, render_template, request, url_for
+from flask import Flask, flash, redirect, render_template, request, send_file, url_for
 
 app = Flask(__name__)
 app.secret_key = "caetanos_motores_chave_secreta"
@@ -51,7 +52,7 @@ def painel():
     conn = conectar_banco()
     cursor = conn.cursor()
     
-    clientes = cursor.execute("SELECT * FROM clientes").fetchall()
+    clientes = cursor.execute("SELECT * FROM clientes ORDER BY id DESC").fetchall()
     caixa = cursor.execute("SELECT * FROM caixa ORDER BY id DESC").fetchall()
     
     agendamentos = cursor.execute("""
@@ -79,10 +80,21 @@ def cadastrar_cliente():
     equipamento = request.form.get("equipamento")
     
     with conectar_banco() as conn:
-        conn.cursor().execute("INSERT INTO clientes (nome, telefone, equipamento) VALUES (?, ?, ?)", (nome, telefone, equipamento))
+        conn.cursor().execute(
+            "INSERT INTO clientes (nome, telefone, equipamento) VALUES (?, ?, ?)",
+            (nome, telefone, equipamento)
+        )
         conn.commit()
         
     flash("Cliente cadastrado com sucesso!")
+    return redirect(url_for("painel"))
+
+@app.route("/excluir_cliente/<int:id>")
+def excluir_cliente(id):
+    with conectar_banco() as conn:
+        conn.cursor().execute("DELETE FROM clientes WHERE id = ?", (id,))
+        conn.commit()
+    flash("Cliente removido.")
     return redirect(url_for("painel"))
 
 @app.route("/agendar_servico", methods=["POST"])
@@ -92,27 +104,56 @@ def agendar_servico():
     servico = request.form.get("servico")
     
     with conectar_banco() as conn:
-        conn.cursor().execute("INSERT INTO agendamentos (cliente_id, data, servico) VALUES (?, ?, ?)", (cliente_id, data, servico))
+        conn.cursor().execute(
+            "INSERT INTO agendamentos (cliente_id, data, servico) VALUES (?, ?, ?)",
+            (cliente_id, data, servico)
+        )
         conn.commit()
         
     flash("Agendamento realizado!")
+    return redirect(url_for("painel"))
+
+@app.route("/concluir_agendamento/<int:id>")
+def concluir_agendamento(id):
+    with conectar_banco() as conn:
+        conn.cursor().execute("UPDATE agendamentos SET status = 'Concluído' WHERE id = ?", (id,))
+        conn.commit()
+    flash("Serviço marcado como concluído!")
+    return redirect(url_for("painel"))
+
+@app.route("/excluir_agendamento/<int:id>")
+def excluir_agendamento(id):
+    with conectar_banco() as conn:
+        conn.cursor().execute("DELETE FROM agendamentos WHERE id = ?", (id,))
+        conn.commit()
+    flash("Agendamento excluído.")
     return redirect(url_for("painel"))
 
 @app.route("/lancar_caixa", methods=["POST"])
 def lancar_caixa():
     tipo = request.form.get("tipo")
     descricao = request.form.get("descricao")
-    valor = float(request.form.get("valor", 0))
+    valor_str = request.form.get("valor", "").replace(",", ".")
+    valor = float(valor_str) if valor_str else 0.0
     data = request.form.get("data")
     
     with conectar_banco() as conn:
-        conn.cursor().execute("INSERT INTO caixa (tipo, descricao, valor, data) VALUES (?, ?, ?, ?)", (tipo, descricao, valor, data))
+        conn.cursor().execute(
+            "INSERT INTO caixa (tipo, descricao, valor, data) VALUES (?, ?, ?, ?)",
+            (tipo, descricao, valor, data)
+        )
         conn.commit()
         
     flash("Lançamento financeiro realizado!")
     return redirect(url_for("painel"))
-from flask import send_file
-import io
+
+@app.route("/excluir_caixa/<int:id>")
+def excluir_caixa(id):
+    with conectar_banco() as conn:
+        conn.cursor().execute("DELETE FROM caixa WHERE id = ?", (id,))
+        conn.commit()
+    flash("Lançamento removido do caixa.")
+    return redirect(url_for("painel"))
 
 @app.route("/backup")
 def fazer_backup():
@@ -126,11 +167,9 @@ def fazer_backup():
     }
     conn.close()
     
-    # Converte o dicionário em um arquivo de texto na memória
     json_str = json.dumps(backup_data, ensure_ascii=False, indent=4)
     file_object = io.BytesIO(json_str.encode('utf-8'))
     
-    # Envia o arquivo direto para o navegador do usuário fazer o download
     return send_file(
         file_object,
         mimetype='application/json',
@@ -138,134 +177,5 @@ def fazer_backup():
         download_name='backup_caetano_motores.json'
     )
 
-class Port:
-    def __init__(self, host="127.0.0.1", port=0, timeout=3.0, buffer_size=4096):
-        self.host = host
-        self.port = port
-        self.timeout = timeout
-        self.buffer_size = buffer_size
-        self._socket = None
-        self._connected = False
-
-    def open(self):
-        if self._socket is not None:
-            return self
-
-        self._socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self._socket.settimeout(self.timeout)
-        if self.port:
-            self._socket.bind((self.host, self.port))
-        return self
-
-    def connect(self, host=None, port=None):
-        if host is not None:
-            self.host = host
-        if port is not None:
-            self.port = port
-
-        if self._socket is None:
-            self.open()
-
-        self._socket.connect((self.host, self.port))
-        self._connected = True
-        return self
-
-    def listen(self, host=None, port=None, backlog=5):
-        if host is not None:
-            self.host = host
-        if port is not None:
-            self.port = port
-
-        if self._socket is None:
-            self.open()
-
-        self._socket.bind((self.host, self.port))
-        self._socket.listen(backlog)
-        self._connected = True
-        return self
-
-    def accept(self):
-        if self._socket is None:
-            raise ConnectionError("Port not opened.")
-
-        client_socket, address = self._socket.accept()
-        return client_socket, address
-
-    def write(self, data):
-        if self._socket is None:
-            raise ConnectionError("Port not opened.")
-
-        if isinstance(data, str):
-            data = data.encode("utf-8")
-
-        if not data:
-            return 0
-
-        return self._socket.sendall(data)
-
-    def read(self, size=None):
-        if self._socket is None:
-            raise ConnectionError("Port not opened.")
-
-        if size is None:
-            size = self.buffer_size
-
-        return self._socket.recv(size)
-
-    def readline(self, size=None):
-        if self._socket is None:
-            raise ConnectionError("Port not opened.")
-
-        if size is None:
-            size = self.buffer_size
-
-        buffer = bytearray()
-        while True:
-            chunk = self._socket.recv(1)
-            if not chunk:
-                break
-            buffer.extend(chunk)
-            if chunk == b"\n" or len(buffer) >= size:
-                break
-        return bytes(buffer)
-
-    def close(self):
-        if self._socket is not None:
-            self._socket.close()
-            self._socket = None
-        self._connected = False
-
-    def __enter__(self):
-        self.open()
-        return self
-
-    def __exit__(self, exc_type, exc_value, traceback):
-        self.close()
-
-    def __repr__(self):
-        return f"Port(host={self.host!r}, port={self.port!r}, connected={self._connected})"
-
-# =========================================================================
-# ROTAS OPERACIONAIS - CAETANO MOTORES (BALCÃO DA OFICINA)
-# =========================================================================
-
-@app.route('/sistema/salvar-oficina', methods=['POST'])
-def salvar_oficina_motor():
-    """Recebe os dados do formulário do balcão e confirma o cadastro."""
-    cliente = request.form.get('cliente')
-    whatsapp = request.form.get('whatsapp')
-    equipamento = request.form.get('equipamento')
-    valor = request.form.get('valor')
-    
-    # Validação rápida de segurança corporativa
-    if not cliente or not equipamento or not valor:
-        return "Erro: Campos Nome, Equipamento e Valor são obrigatórios.", 400
-        
-    print(f"⚙️ Motor Cadastrado no Balcão: Cliente {cliente} | Equipamento: {equipamento}")
-    return "<h1>Equipamento cadastrado com sucesso na oficina!</h1>"
-
-import socket
-
 if __name__ == "__main__":
-    # Corrigido de 'porr' para 'port' com apenas um r
     app.run(host='0.0.0.0', port=5000, debug=False)
